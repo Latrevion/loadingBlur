@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+
+    * {
+      margin:0;
+      padding:0;
+      box-sizing: border-box;
+
+    }
+
+    body {
+      font-family:  sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      /*overflow: hidden;*/
+    }
+
+    .bg {
+      background: url('https://s3.bmp.ovh/imgs/2022/04/12/7adc5158060e70cd.jpg')
+      no-repeat center center/cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw ;
+      height: 100vh;
+      z-index: -1;
+      filter: blur(0px);
+      color:#fff;
+      font-size:50px;
+      text-align:center;
+    }
+
+    .loading-text {
+      font-size: 50px;
+      color: #fff;
+
+    }
+
+    button{
+      font-size: 20px;
+      position:absolute;
+      top: 0;
+      margin-top:300px;
+      z-index:-2;
+      border:2px solid skyblue;
+      width: 150px;
+      height: 60px;
+      background-color: rgba(255,255,255,.2);
+      display: block;
+      border-radius: 10px;
+      color: black;
+      transition: all .5s;
+    }
+
+    button:hover{
+      font-size: 26px;
+      background-color: rgba(255,255,255,.4)
+    }
+
+  </style>
+  <title>LoadingBlur</title>
+</head>
+<body>
+<section class="bg">Hello World!</section>
+
+<button class="button">Go</button>
+<div class="loading-text">加载中50%</div>
+
+<script>
+  const loadText = document.querySelector('.loading-text')
+  const bg = document.querySelector('.bg')
+  const btn = document.querySelector('.button')
+
+  let load = 50
+
+  let int = setInterval(blur, 20)
+
+  function blur() {
+    load++
+
+    if (load > 99) {
+      clearInterval(int)
+    }
+
+    loadText.innerHTML = `Loading${load}%`
+    loadText.style.opacity = scale(load, 0, 100, 1, 0)
+    bg.style.filter = `blur(${scale(load, 0, 100, 30, 0)}px)`
+    btn.style.zIndex =scale(load,0,100,0,3)
+  }
+  btn.onclick = function(){
+    console.log(12334)
+    window.location.href='https://www.baidu.com'
+
+  }
+
+  // https://stackoverflow.com/questions/10756313/javascript-jquery-map-a-range-of-numbers-to-another-range-of-numbers
+  // 按比例转换为一定的范围内的结果
+  const scale = (num, in_min, in_max, out_min, out_max) => {
+    return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
+  }
+</script>
+</body>
+</html>
